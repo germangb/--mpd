@@ -27,13 +27,13 @@ def parse (resp):
 
 def main():
     argp = argparse.ArgumentParser()
-    argp.add_argument('--host', default='localhost')
-    argp.add_argument('--port', type=int, default=6600)
-    argp.add_argument('--format', default='MMPD :: ♫ {title} :: {artist} :: {album} ({date}) :: volume {volume}')
-    argp.add_argument('--format-error', default='MMPD :: Connection to {host}:{port} refused')
-    argp.add_argument('--format-none', default='MMPD :: No more music to play :(')
-    argp.add_argument('--verbose', action='store_true')
-    argp.add_argument('--no-mixer', action='store_true', help='Don\'t listen to mixer events (volume updates)')
+    argp.add_argument('--host', default='localhost', help='MPD host')
+    argp.add_argument('--port', type=int, default=6600, help='MPD port')
+    argp.add_argument('--format', default='μMPD :: ♫ {title} :: {artist} :: {album} ({date}) :: volume {volume}', help='Specify output format')
+    argp.add_argument('--format-error', default='μMPD :: Connection to {host}:{port} refused', help='specify connection error message format')
+    argp.add_argument('--format-none', default='μMPD :: No more music to play :(', help='Specify output format for whenever MPD ends the music playlist')
+    argp.add_argument('--verbose', action='store_true', help='Write debug information to stderr')
+    argp.add_argument('--no-mixer', action='store_true', help='Disable mixer events (volume updates)')
     args = vars(argp.parse_args())
 
     address = (args['host'], args['port'])
@@ -92,12 +92,15 @@ def main():
             sys.stdout.flush()
 
     except ConnectionError:
+        sys.stderr.write('Connection to MPD refused or lost\n')
         sys.stdout.write(args['format_error'].format(host=args['host'], port=args['port']))
         sys.stdout.write('\n')
-        sys.stdout.flush()
     except KeyboardInterrupt:
+        sys.stderr.write('Interrupted\n')
         pass
     finally:
+        sys.stdout.flush()
+        sys.stderr.flush()
         client.close()
 
 if __name__ == '__main__':

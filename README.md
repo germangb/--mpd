@@ -19,7 +19,7 @@ $ ./mmpd.py --host 127.0.0.1 --port 6600 | dzen2
 
 ## Display formats
 
-You can modify the output format. with `--format` you specify the "song playing" format. With `--format-error` you speify the format of the "connection error" message. With `--format--none` you specify the format of the message that shows up when the MPD playlist ends
+You can modify the output format. With `--format` you specify the "song playing" format. With `--format-error` you speify the format of the "connection error" message. With `--format-none` you specify the format of the message that shows up when the MPD playlist ends
 ```
 $ ./mmpd.py \
     --format 'Now playing {title} by {artist}' \
@@ -44,16 +44,16 @@ Tag | Data
 You can pipe the output to some program that reformats the text
 ```
 $ # cool_volume.py is a script that finds the volume integer and replaces it with something fancy like ▁▂▃▅█
-$ # the cw{volume} tag has to be wrapped as specified in this --format
+$ # the {volume} tag has to be wrapped as specified in this --format
 $ ./mmpd.py --format 'Now Playing {title} #({volume})' | ./cool_volume.py | dzen2
 ```
 
 ### I want dzen2 to only appear when something starts playing
-One option is to reformat the output as a unix command, including the pipe to dzen2 there
+One option is to reformat the output as a command, including the pipe to dzen2 there
 ```
-$ TIME=4 && ./mmpd.py --no-mixer \
-    --format 'echo "MMPD :: ♫ Now Playing ♪ {title} by {artist}" | dzen2 -p $TIME ' | sh
+$ ./mmpd.py --no-mixer \
+    --format 'echo "MMPD :: ♫ Now Playing ♪ {title} by {artist}" | dzen2 -p 2 ' | sh
 ```
-This will make dzen show up and disappear after a few $TIME seconds. If you go with this option, then disable mixer events.
+This will make dzen show up and disappear after a 4 seconds. If you go with this option, then disable mixer events as they will spam dzen2
 ## Additional information
 The Music Player Daemon protocol [http://www.musicpd.org/doc/protocol/](http://www.musicpd.org/doc/protocol/)
