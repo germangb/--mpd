@@ -45,6 +45,7 @@ You can pipe the output to some program that reformats the text
 ```
 $ # cool_volume.py is a script that finds the volume integer and replaces it with something fancy like ▁▂▃▅█
 $ # the {volume} tag has to be wrapped as specified in this --format
+$
 $ ./mmpd.py --format 'Now Playing {title} #({volume})' | ./cool_volume.py | dzen2
 ```
 
