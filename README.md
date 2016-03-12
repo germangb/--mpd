@@ -9,19 +9,19 @@ When the connection to MPD is lost, the script stops running.
 ## Usage example
 ```
 $ # host and port will default to localhost and 6600 respectively
-$ ./mmpd.py --host 127.0.0.1 --port 6600
+$ ./umpd.py --host 127.0.0.1 --port 6600
 ```
 
 ## Usage example with dzen2
 ```
-$ ./mmpd.py --host 127.0.0.1 --port 6600 | dzen2
+$ ./umpd.py --host 127.0.0.1 --port 6600 | dzen2
 ```
 
 ## Display formats
 
 You can modify the output format. With `--format` you specify the "song playing" format. With `--format-error` you speify the format of the "connection error" message. With `--format-none` you specify the format of the message that shows up when the MPD playlist ends
 ```
-$ ./mmpd.py \
+$ ./umpd.py \
     --format 'Now playing {title} by {artist}' \
     --format-error 'Connection to {host}:{port} refused :/' \
     --format-none 'There is no more music'
@@ -46,13 +46,13 @@ You can pipe the output to some program that reformats the text
 $ # cool_volume.py is a script that finds the volume integer and replaces it with something fancy like ▁▂▃▅█
 $ # the {volume} tag has to be wrapped as specified in this --format
 $
-$ ./mmpd.py --format 'Now Playing {title} #({volume})' | ./cool_volume.py | dzen2
+$ ./umpd.py --format 'Now Playing {title} #({volume})' | ./cool_volume.py | dzen2
 ```
 
 ### I want dzen2 to only appear when something starts playing
 One option is to reformat the output as a command, including the pipe to dzen2 there
 ```
-$ ./mmpd.py --no-mixer \
+$ ./umpd.py --no-mixer \
     --format 'echo "MMPD :: ♫ Now Playing ♪ {title} by {artist}" | dzen2 -p 2 ' | sh
 ```
 This will make dzen show up and disappear after a 4 seconds. If you go with this option, then disable mixer events as they will spam dzen2
