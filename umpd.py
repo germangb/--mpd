@@ -25,17 +25,7 @@ def parse (resp):
             parsed[data[0]] = data[1].lstrip()
     return parsed
 
-def main():
-    argp = argparse.ArgumentParser()
-    argp.add_argument('--host', default='localhost', help='MPD host')
-    argp.add_argument('--port', type=int, default=6600, help='MPD port')
-    argp.add_argument('--format', default='μMPD :: ♫ {title} :: {artist} :: {album} ({date}) :: volume {volume}', help='Specify output format')
-    argp.add_argument('--format-error', default='μMPD :: Connection to {host}:{port} refused', help='specify connection error message format')
-    argp.add_argument('--format-none', default='μMPD :: No more music to play :(', help='Specify output format for whenever MPD ends the music playlist')
-    argp.add_argument('--verbose', action='store_true', help='Write debug information to stderr')
-    argp.add_argument('--no-mixer', action='store_true', help='Disable mixer events (volume updates)')
-    args = vars(argp.parse_args())
-
+def main(args):
     address = (args['host'], args['port'])
     client = socket.socket()
     
@@ -104,4 +94,12 @@ def main():
         client.close()
 
 if __name__ == '__main__':
-    main()
+    argp = argparse.ArgumentParser()
+    argp.add_argument('--host', default='localhost', help='MPD host')
+    argp.add_argument('--port', type=int, default=6600, help='MPD port')
+    argp.add_argument('--format', default='μMPD :: ♫ {title} :: {artist} :: {album} ({date}) :: volume {volume}', help='Specify output format')
+    argp.add_argument('--format-error', default='μMPD :: Connection to {host}:{port} refused', help='specify connection error message format')
+    argp.add_argument('--format-none', default='μMPD :: No more music to play :(', help='Specify output format for whenever MPD ends the music playlist')
+    argp.add_argument('--verbose', action='store_true', help='Write debug information to stderr')
+    argp.add_argument('--no-mixer', action='store_true', help='Disable mixer events (volume updates)')
+    main(vars(argp.parse_args()))
