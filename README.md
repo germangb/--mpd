@@ -53,8 +53,9 @@ $ ./umpd.py --format 'Now Playing {title} #({volume})' | ./cool_volume.py | dzen
 One option is to reformat the output as a command, including the pipe to dzen2 there
 ```
 $ ./umpd.py --no-mixer \
-    --format 'echo "MMPD :: ♫ Now Playing ♪ {title} by {artist}" | dzen2 -p 2 ' | sh
+    --format 'echo "μMPD :: ♫ Now Playing ♪ {title} by {artist}" | dzen2 -p 2 ' | sh
 ```
-This will make dzen show up and disappear after a 4 seconds. If you go with this option, then disable mixer events as they will spam dzen2
+This will make dzen2 show up and disappear after a 2 seconds. If you go with this option, then disable mixer events as they will spam dzen2
+
 ## Additional information
 The Music Player Daemon protocol [http://www.musicpd.org/doc/protocol/](http://www.musicpd.org/doc/protocol/)
